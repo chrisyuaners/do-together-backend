@@ -13,7 +13,8 @@ class UsersController < ApplicationController
     user = User.new(
       username: params[:username],
       password: params[:password],
-      name: params[:name]
+      name: params[:name],
+      image: params[:image]
     )
 
     if user.save
@@ -30,7 +31,7 @@ class UsersController < ApplicationController
     render json: user
   end
 
-  def delete
+  def destroy
     user = User.find(params[:id])
     user.destroy
   end

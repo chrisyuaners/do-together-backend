@@ -26,11 +26,15 @@ class GroupsController < ApplicationController
   end
 
   def remove_user
-    # byebug
     group = Group.find(params[:group_id])
     user = User.find(params[:user_id])
     user_group = UserGroup.where(group_id: group.id, user_id: user.id)
+    group.events.each { |event| event.attendees.each {|att| att.user_id == params[:user_id].to_i ? att.destroy : nil }}
     user_group.destroy_all
+    
+    group = Group.find(params[:group_id])
+
+    render json: group
   end
 
   private
